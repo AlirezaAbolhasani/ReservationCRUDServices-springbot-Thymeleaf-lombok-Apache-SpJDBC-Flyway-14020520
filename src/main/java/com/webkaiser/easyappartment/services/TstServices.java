@@ -1,7 +1,7 @@
 package com.webkaiser.easyappartment.services;
 
 import com.webkaiser.easyappartment.dao.TestEntityDao;
-import com.webkaiser.easyappartment.entity.EasyAppartment;
+import com.webkaiser.easyappartment.entity.ReservationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +17,24 @@ public class TstServices {
         this.testEntityDao = te;
     }
 
-    public EasyAppartment selectAPerson(byte id)
+    public ReservationForm selectAReservationForm(String mail)
     {
-        return  testEntityDao.selectAPerson(id);
+        return  testEntityDao.selectAReservationForm(mail);
     }
 
-    public List<EasyAppartment> selectAllUsers()
+    public List<ReservationForm> selectAllReservationForms()
     {
-       return testEntityDao.selectAllUsers();
+       return testEntityDao.selectAllReservationForms();
     }
 
-    public int addNewUser (EasyAppartment easyAppartment){
-        return testEntityDao.saveUser(easyAppartment);
+    public int saveNewForm (ReservationForm reservationForm){
+        return testEntityDao.saveNewForm(reservationForm);
     }
-    public int updateAnOldUser(EasyAppartment easyAppartment){
-        return testEntityDao.updateUser(easyAppartment);
+    public int updateFormByEmail(ReservationForm reservationForm){
+        return testEntityDao.updateFormByEmail(reservationForm);
     }
-    public int deleteAnUser(byte id){
-        return testEntityDao.deleteUser(id);
+    public int deleteAForm(String mail){
+        return testEntityDao.deleteAForm(mail);
     }
 
 

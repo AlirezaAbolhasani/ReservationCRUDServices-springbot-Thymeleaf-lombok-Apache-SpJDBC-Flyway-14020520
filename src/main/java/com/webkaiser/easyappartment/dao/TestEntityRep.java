@@ -1,6 +1,6 @@
 package com.webkaiser.easyappartment.dao;
 
-import com.webkaiser.easyappartment.entity.EasyAppartment;
+import com.webkaiser.easyappartment.entity.ReservationForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,41 +20,68 @@ public class TestEntityRep implements TestEntityDao {
     }
 
     @Override
-    public EasyAppartment selectAPerson(byte id) {
-        final String sql="SELECT Name ,Family FROM easyappartment.test WHERE id = ?;";
-        List<EasyAppartment> testentityArrayList = new ArrayList<EasyAppartment>();
-        EasyAppartment testEntity = jdbcTemplate.queryForObject(sql,new Object[]{id},(resultSet, i)->
+    public ReservationForm selectAReservationForm(String email) {
+        String emailT = email.trim();
+        final String sql="SELECT\n" +
+                "  name,\n" +
+                "  family,\n" +
+                "  zipcode,\n" +
+                "  phoneNumber,\n" +
+                "  address,\n" +
+                "  email,\n" +
+                "  id\n" +
+                "FROM reserveforminformation where email= ?;";
+        List<ReservationForm> testentityArrayList = new ArrayList<ReservationForm>();
+        ReservationForm testEntity = jdbcTemplate.queryForObject(sql,new Object[]{emailT},(resultSet, i)->
         {
             String pName   = resultSet.getString("name");
             String pFamily = resultSet.getString("family");
-            return new EasyAppartment(pName,pFamily);
+            String pzipcode = resultSet.getString("zipcode");
+            String pphoneNumber = resultSet.getString("phoneNumber");
+            String paddress = resultSet.getString("address");
+            String pemail = resultSet.getString("email");
+            byte pid = resultSet.getByte("id");
+
+            return new ReservationForm(pid,pName,pFamily,pphoneNumber,paddress,pzipcode,pemail);
         });
         return testEntity;
     }
 
     @Override
-    public List<EasyAppartment> selectAllUsers() {
-        List<EasyAppartment> users = jdbcTemplate.query(
-                String.format("SELECT id, Name, Family FROM easyappartment.test; "),
+    public List<ReservationForm> selectAllReservationForms() {
+        final String sql="SELECT\n" +
+                "  name,\n" +
+                "  family,\n" +
+                "  zipcode,\n" +
+                "  phoneNumber,\n" +
+                "  address,\n" +
+                "  email,\n" +
+                "  id\n" +
+                "FROM reserveforminformation ;";
+        List<ReservationForm> allreserveForms = jdbcTemplate.query(
+                String.format(sql),
                 (Object[]) null,
-                (req, rowNum) -> new EasyAppartment(req.getByte("id"),req.getString("name"), req.getString("family")));
-        return users;
+                (req, rowNum) -> new ReservationForm(req.getByte("id"),req.getString("name"), req.getString("family"),
+                 req.getString("zipcode"),req.getString("phoneNumber"),req.getString("address"),req.getString("email")));
+        return allreserveForms;
     }
 
     // Part Two: you can import data to each section as below sample
     @Override
-    public int saveUser(EasyAppartment e){
-        String query="insert into easyappartment.test(name ,family) values('"+e.getName()+"','"+e.getFamily()+"')";
+    public int saveNewForm(ReservationForm e){
+        String query="insert into easyappartment.reserveforminformation( name,family,zipcode,phoneNumber,address,email,id) " +
+                " values('"+e.getName()+"','"+e.getFamily()+"','"+e.getZipcode()+"'" +
+                ",'"+e.getPhoneNumber()+"','"+e.getAddress()+"','"+e.getEmail()+"','"+e.getId()+"')";
         return jdbcTemplate.update(query);
     }
     @Override
-    public int updateUser(EasyAppartment e){
-        String query="update easyappartment.test set  name='"+e.getName()+"',family='"+e.getFamily()+"' where id='"+e.getId()+"'";
+    public int updateFormByEmail(ReservationForm e){
+        String query="update easyappartment.reserveforminformation set  address='"+e.getAddress()+"',zipcode='"+e.getZipcode()+"' where email='"+e.getEmail()+"'";
         return jdbcTemplate.update(query);
     }
     @Override
-    public int deleteUser(byte id){
-        String query="delete from easyappartment.test where id='"+id+"' ";
+    public int deleteAForm(String email){
+        String query="delete from easyappartment.reserveforminformation where email='"+email+"' ";
         return jdbcTemplate.update(query);
     }
 
