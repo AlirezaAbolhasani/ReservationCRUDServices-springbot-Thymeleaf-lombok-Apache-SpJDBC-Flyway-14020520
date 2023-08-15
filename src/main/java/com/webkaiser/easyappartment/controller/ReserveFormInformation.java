@@ -1,12 +1,13 @@
 package com.webkaiser.easyappartment.controller;
 
 import com.webkaiser.easyappartment.entity.ReservationForm;
+import com.webkaiser.easyappartment.exception.ReservationException;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @RequestMapping("ReservationForm/")
@@ -21,15 +22,31 @@ public class ReserveFormInformation {
         this.tstservices = tstservices;
     }
 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value="/getAllReservationForms",method = RequestMethod.GET)
     public List<ReservationForm> getAllReservationForms ()
     {
-        return tstservices.selectAllReservationForms();
+        try
+        {
+           return tstservices.selectAllReservationForms();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            throw new ReservationException();
+        }
+
     }
 
+//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.GET)
     public ReservationForm selectAReservationForm(@PathVariable("mail") String mail){
-        return tstservices.selectAReservationForm(mail);
+        try {
+            return tstservices.selectAReservationForm(mail);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new ReservationException();
+        }
     }
 
     // http://127.0.0.1:8080/Webkaiser/addNewUser/Alireza/Abolhasani
@@ -53,7 +70,7 @@ public class ReserveFormInformation {
     // http://localhost:8080/Webkaiser/updateUser?name=100&family=something
     @RequestMapping(value = "/editeUserInfo/{Email}/{Address}/{PostCode}",
             method = RequestMethod.PUT)
-    public int editeUserInfo(@PathVariable("Email") String email,
+    public int editUserInfo(@PathVariable("Email") String email,
                           @PathVariable("Address") String address,
                           @PathVariable("PostCode") String zipCode){
         ReservationForm reservationForm = new ReservationForm();
@@ -63,10 +80,11 @@ public class ReserveFormInformation {
 
         return tstservices.updateFormByEmail(reservationForm);
     }
-
+    @ExceptionHandler()
     @RequestMapping(value = "/deleteAForm/{Email}",method = RequestMethod.DELETE)
     public int deleteAForm(@PathVariable("Email") String email){
-        return tstservices.deleteAForm(email);
+       int a =tstservices.deleteAForm(email);
+       throw new ReservationException();
     }
 
     public void runner(ApplicationArguments arg) {
