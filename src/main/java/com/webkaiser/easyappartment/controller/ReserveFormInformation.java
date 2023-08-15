@@ -3,6 +3,7 @@ package com.webkaiser.easyappartment.controller;
 import com.webkaiser.easyappartment.entity.ReservationForm;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Email;
@@ -50,11 +51,11 @@ public class ReserveFormInformation {
      }
 
     // http://localhost:8080/Webkaiser/updateUser?name=100&family=something
-    @RequestMapping(value = "/editeUserInfo/{Email}/{Address}/{Zipcode}",
+    @RequestMapping(value = "/editeUserInfo/{Email}/{Address}/{PostCode}",
             method = RequestMethod.PUT)
     public int editeUserInfo(@PathVariable("Email") String email,
                           @PathVariable("Address") String address,
-                          @PathVariable("ZipCode") String zipCode){
+                          @PathVariable("PostCode") String zipCode){
         ReservationForm reservationForm = new ReservationForm();
         reservationForm.setEmail(email);
         reservationForm.setAddress(address);
@@ -66,6 +67,15 @@ public class ReserveFormInformation {
     @RequestMapping(value = "/deleteAForm/{Email}",method = RequestMethod.DELETE)
     public int deleteAForm(@PathVariable("Email") String email){
         return tstservices.deleteAForm(email);
+    }
+
+    public void runner(ApplicationArguments arg) {
+        System.out.println("*****************************************************************************");
+        System.out.println("*****************************************************************************");
+        System.out.println("**********************Reservation Webservice Is Running**********************");
+        System.out.println("**********************Developer:Alireza Abolhasani***************************");
+        System.out.println("*****************************************************************************");
+        System.out.println("*****************************************************************************");
     }
 
 }

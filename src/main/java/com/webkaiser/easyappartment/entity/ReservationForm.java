@@ -5,12 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
 //@JsonSerialize
 @Data
 @NoArgsConstructor
-@Table(name = "reserveforminformation")
 public class ReservationForm implements Serializable {
 
     private byte id;
