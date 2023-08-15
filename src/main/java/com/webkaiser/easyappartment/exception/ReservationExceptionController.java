@@ -15,7 +15,7 @@ public class ReservationExceptionController {
 
     @ExceptionHandler(value = ReservationException.class)
     public ResponseEntity<EntityError> exception(ReservationException exception) {
-        //ReservationException a = (ReservationException) exception;
+        ReservationException a = (ReservationException) exception;
         EntityError businessError = new EntityError(a.getHttpStatus(), a.getMsgError());
         return new ResponseEntity<>(businessError, a.getHttpStatus());
     }
