@@ -14,25 +14,5 @@ import org.springframework.http.HttpStatus;
  **/
 
 public class ReservationException extends RuntimeException {
-    //private static final long serialVersionUID = 1L;
-
-    private HttpStatus httpStatus;
-    private String msgError;
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
-    public String getMsgError() {
-        return msgError;
-    }
-
-    public void setMsgError(String msgError) {
-        this.msgError = msgError;
-    }
-
+    private static final long serialVersionUID = 1L;
 }

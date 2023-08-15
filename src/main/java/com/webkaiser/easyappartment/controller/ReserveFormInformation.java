@@ -1,11 +1,13 @@
 package com.webkaiser.easyappartment.controller;
 
+import com.webkaiser.easyappartment.dao.TestEntityDao;
 import com.webkaiser.easyappartment.entity.ReservationForm;
 import com.webkaiser.easyappartment.exception.ReservationException;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class ReserveFormInformation {
         this.tstservices = tstservices;
     }
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value="/getAllReservationForms",method = RequestMethod.GET)
     public List<ReservationForm> getAllReservationForms ()
     {
@@ -37,11 +39,14 @@ public class ReserveFormInformation {
 
     }
 
-//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+  // 127.0.0.1:8080/ReservationForm/selectAReservationForm/a
+  // @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.GET)
-    public ReservationForm selectAReservationForm(@PathVariable("mail") String mail){
+    public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail){
         try {
-            return tstservices.selectAReservationForm(mail);
+            ReservationForm reservationForm = tstservices.selectAReservationForm(mail);
+            return ResponseEntity.ok().body(reservationForm);
+
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -51,12 +56,13 @@ public class ReserveFormInformation {
 
     // http://127.0.0.1:8080/Webkaiser/addNewUser/Alireza/Abolhasani
     @PostMapping(value = "/saveNewForm/{Name}/{Family}/{ZipCode}/{PhoneNumber}/{Address}/{Email}")
-     public int saveNewForm(@PathVariable("Name") String name,
+     public ResponseEntity<Integer> saveNewForm(@PathVariable("Name") String name,
                             @PathVariable("Family") String family,
                             @PathVariable("ZipCode") String zipcode,
                             @PathVariable("PhoneNumber") String phoneNumber,
                             @PathVariable("Address") String address,
                             @PathVariable("Email") String email){
+        try {
         ReservationForm reservationForm = new ReservationForm();
         reservationForm.setName(name);
         reservationForm.setFamily(family);
@@ -64,27 +70,44 @@ public class ReserveFormInformation {
         reservationForm.setPhoneNumber(phoneNumber);
         reservationForm.setAddress(address);
         reservationForm.setEmail(email);
-        return tstservices.saveNewForm(reservationForm);
+        return ResponseEntity.ok().body(tstservices.saveNewForm(reservationForm));
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new ReservationException();
+        }
      }
 
     // http://localhost:8080/Webkaiser/updateUser?name=100&family=something
     @RequestMapping(value = "/editeUserInfo/{Email}/{Address}/{PostCode}",
             method = RequestMethod.PUT)
-    public int editUserInfo(@PathVariable("Email") String email,
+    public ResponseEntity<Integer> editUserInfo(@PathVariable("Email") String email,
                           @PathVariable("Address") String address,
                           @PathVariable("PostCode") String zipCode){
-        ReservationForm reservationForm = new ReservationForm();
-        reservationForm.setEmail(email);
-        reservationForm.setAddress(address);
-        reservationForm.setZipcode(zipCode);
-
-        return tstservices.updateFormByEmail(reservationForm);
+        try {
+            ReservationForm reservationForm = new ReservationForm();
+            reservationForm.setEmail(email);
+            reservationForm.setAddress(address);
+            reservationForm.setZipcode(zipCode);
+            return ResponseEntity.ok().body(tstservices.updateFormByEmail(reservationForm));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new ReservationException();
+        }
     }
     @ExceptionHandler()
     @RequestMapping(value = "/deleteAForm/{Email}",method = RequestMethod.DELETE)
-    public int deleteAForm(@PathVariable("Email") String email){
-       int a =tstservices.deleteAForm(email);
-       throw new ReservationException();
+    public ResponseEntity<Integer> deleteAForm(@PathVariable("Email") String email){
+        try
+        {
+            return ResponseEntity.ok().body(tstservices.deleteAForm(email));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new ReservationException();
+        }
     }
 
     public void runner(ApplicationArguments arg) {

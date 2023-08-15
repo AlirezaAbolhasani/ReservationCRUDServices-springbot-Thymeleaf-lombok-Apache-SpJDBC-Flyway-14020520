@@ -1,5 +1,6 @@
 package com.webkaiser.easyappartment.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,10 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ReservationExceptionController {
 
     @ExceptionHandler(value = ReservationException.class)
-    public ResponseEntity<EntityError> exception(ReservationException exception) {
-        ReservationException a = (ReservationException) exception;
-        EntityError businessError = new EntityError(a.getHttpStatus(), a.getMsgError());
-        return new ResponseEntity<>(businessError, a.getHttpStatus());
-    }
 
+    public ResponseEntity<Object> exception(ReservationException exception) {
+        return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+    }
 }
