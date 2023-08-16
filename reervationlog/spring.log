@@ -1,0 +1,20 @@
+2023-08-15 12:27:39.196  INFO 380 --- [main] c.w.e.EasyappartmentApplication          : Starting EasyappartmentApplication on DESKTOP-NTBO76K with PID 380 (E:\MyGitProjects\JJJJJJ\ReservationCRUDServices-springbot-Thymeleaf-lombok-Apache-SpJDBC-Flyway-14020520\target\classes started by Alireza in E:\MyGitProjects\JJJJJJ\ReservationCRUDServices-springbot-Thymeleaf-lombok-Apache-SpJDBC-Flyway-14020520)
+2023-08-15 12:27:39.212  INFO 380 --- [main] c.w.e.EasyappartmentApplication          : No active profile set, falling back to default profiles: default
+2023-08-15 12:27:40.261  INFO 380 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2023-08-15 12:27:40.281  INFO 380 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14ms. Found 0 repository interfaces.
+2023-08-15 12:27:40.649  INFO 380 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-08-15 12:27:40.990  INFO 380 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-15 12:27:41.005  INFO 380 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-15 12:27:41.005  INFO 380 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.27]
+2023-08-15 12:27:41.143  INFO 380 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-15 12:27:41.143  INFO 380 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1865 ms
+2023-08-15 12:27:41.500  INFO 380 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-08-15 12:27:41.614  WARN 380 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2023-08-15 12:27:41.772  WARN 380 --- [main] o.s.b.a.f.FreeMarkerAutoConfiguration    : Cannot find template location(s): [classpath:/templates/] (please add some templates, check your FreeMarker configuration, or set spring.freemarker.checkTemplateLocation=false)
+2023-08-15 12:27:41.829  INFO 380 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-15 12:27:41.836  INFO 380 --- [main] c.w.e.EasyappartmentApplication          : Started EasyappartmentApplication in 3.145 seconds (JVM running for 4.538)
+2023-08-15 12:27:46.832  INFO 380 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-15 12:27:46.832  INFO 380 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-15 12:27:46.849  INFO 380 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 17 ms
+2023-08-15 12:27:46.903  INFO 380 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-15 12:27:47.553  INFO 380 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
