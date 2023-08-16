@@ -11,13 +11,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ReservationForm implements Serializable {
 
-    private byte id;
-    private String name;
-    private String family;
-    private String phoneNumber;
-    private String address;
-    private String zipcode;
-    private String email;
+    private byte id = 0;
+    private String name ="";
+    private String family="";
+    private String phoneNumber="";
+    private String address="";
+    private String zipcode="";
+    private String email="";
 
     public ReservationForm(byte id, String name, String family, String phoneNumber, String address, String zipcode, String email) {
         this.id = id;

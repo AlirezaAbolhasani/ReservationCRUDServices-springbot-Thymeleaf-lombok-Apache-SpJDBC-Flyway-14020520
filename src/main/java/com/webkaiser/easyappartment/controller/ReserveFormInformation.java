@@ -1,16 +1,20 @@
 package com.webkaiser.easyappartment.controller;
 
+import com.mysql.cj.x.protobuf.Mysqlx;
+import com.webkaiser.easyappartment.alert.Status;
 import com.webkaiser.easyappartment.entity.ReservationForm;
 import com.webkaiser.easyappartment.exception.ControllerAdviceHandeller;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.webkaiser.easyappartment.alert.Status.ERROR_IN_ENTRY;
 import static com.webkaiser.easyappartment.alert.Status.MSG_ZERO;
 
 @RequestMapping("ReservationForm/")
@@ -32,15 +36,27 @@ public class ReserveFormInformation {
         return new ResponseEntity<>(tstservices.selectAllReservationForms(), HttpStatus.OK);
     }
 
-  // 127.0.0.1:8080/ReservationForm/selectAReservationForm/a
-  // @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.GET)
     public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail){
-        return new ResponseEntity<>(tstservices.selectAReservationForm(mail), HttpStatus.OK);
-
+        ReservationForm reservationForm = new ReservationForm();
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus httpStatus = null;
+        reservationForm = tstservices.selectAReservationForm(mail);
+        if( ! (reservationForm.getId() == 0)) {
+            httpStatus = HttpStatus.OK;
+             return ResponseEntity.ok()
+                    .header("AAAAAAAAAAAAA", "1111111")
+                    .body(reservationForm);
+        }else{
+            headers.add(ERROR_IN_ENTRY,"121");
+            httpStatus=HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(reservationForm,headers,httpStatus);
+        }
     }
 
-    // http://127.0.0.1:8080/Webkaiser/addNewUser/Alireza/Abolhasani
+    private void httpStatus(int i) {
+    }
+
     @PostMapping(value = "/saveNewForm/{Name}/{Family}/{ZipCode}/{PhoneNumber}/{Address}/{Email}")
      public ResponseEntity<Integer> saveNewForm(@PathVariable("Name") String name,
                             @PathVariable("Family") String family,
@@ -60,7 +76,6 @@ public class ReserveFormInformation {
 
      }
 
-    // http://localhost:8080/Webkaiser/updateUser?name=100&family=something
     @RequestMapping(value = "/editeUserInfo/{Email}/{Address}/{PostCode}",
             method = RequestMethod.PUT)
     public ResponseEntity<Integer> editUserInfo(@PathVariable("Email") String email,

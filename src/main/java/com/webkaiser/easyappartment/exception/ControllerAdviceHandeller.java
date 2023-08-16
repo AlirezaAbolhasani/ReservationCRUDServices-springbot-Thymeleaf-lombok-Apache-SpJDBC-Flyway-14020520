@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
  **/
 
 @ControllerAdvice
-public class ControllerAdviceHandeller {
+public class ControllerAdviceHandeller extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RunTimeReservationError.class)
     public ResponseEntity<ErrorMessage> RunTimeReservationError(RunTimeReservationError ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(

@@ -3,10 +3,13 @@ package com.webkaiser.easyappartment.dao;
 import com.webkaiser.easyappartment.entity.ReservationForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-//import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+
 import org.springframework.stereotype.Repository;
 
+
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,29 +25,33 @@ public class TestEntityRep implements TestEntityDao {
     @Override
     public ReservationForm selectAReservationForm(String email) {
         String emailT = email.trim();
-        final String sql="SELECT\n" +
-                "  name,\n" +
-                "  family,\n" +
-                "  zipcode,\n" +
-                "  phoneNumber,\n" +
-                "  address,\n" +
-                "  email,\n" +
-                "  id\n" +
-                "FROM reserveforminformation where email= ?;";
-        List<ReservationForm> testentityArrayList = new ArrayList<ReservationForm>();
-        ReservationForm testEntity = jdbcTemplate.queryForObject(sql,new Object[]{emailT},(resultSet, i)->
-        {
-            String pName   = resultSet.getString("name");
-            String pFamily = resultSet.getString("family");
-            String pzipcode = resultSet.getString("zipcode");
-            String pphoneNumber = resultSet.getString("phoneNumber");
-            String paddress = resultSet.getString("address");
-            String pemail = resultSet.getString("email");
-            byte pid = resultSet.getByte("id");
-
-            return new ReservationForm(pid,pName,pFamily,pphoneNumber,paddress,pzipcode,pemail);
-        });
-        return testEntity;
+        ReservationForm reservationForm =new ReservationForm();
+        try {
+            final String sql = "SELECT\n" +
+                    "  name,\n" +
+                    "  family,\n" +
+                    "  zipcode,\n" +
+                    "  phoneNumber,\n" +
+                    "  address,\n" +
+                    "  email,\n" +
+                    "  id\n" +
+                    "FROM reserveforminformation where email= ?;";
+            List<ReservationForm> testentityArrayList = new ArrayList<ReservationForm>();
+            reservationForm = jdbcTemplate.queryForObject(sql, new Object[]{emailT}, (resultSet, i) ->
+            {
+                String pName = resultSet.getString("name");
+                String pFamily = resultSet.getString("family");
+                String pzipcode = resultSet.getString("zipcode");
+                String pphoneNumber = resultSet.getString("phoneNumber");
+                String paddress = resultSet.getString("address");
+                String pemail = resultSet.getString("email");
+                byte pid = resultSet.getByte("id");
+                return new ReservationForm(pid, pName, pFamily, pphoneNumber, paddress, pzipcode, pemail);
+            });
+            return reservationForm;
+        }catch (EmptyResultDataAccessException e){
+            return reservationForm;
+        }
     }
 
     @Override
