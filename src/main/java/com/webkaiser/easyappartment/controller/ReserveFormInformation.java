@@ -8,6 +8,7 @@ import com.webkaiser.easyappartment.exception.RunTimeReservationError;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,15 +100,6 @@ public class ReserveFormInformation {
     @RequestMapping(value = "/deleteAForm/{Email}",method = RequestMethod.DELETE)
     public ResponseEntity<Integer> deleteAForm(@PathVariable("Email") String email){
         return ResponseEntity.ok().body(tstservices.deleteAForm(email));
-    }
-
-    public void runner(ApplicationArguments arg) {
-        System.out.println("*****************************************************************************");
-        System.out.println("*****************************************************************************");
-        System.out.println("**********************Reservation Webservice Is Running**********************");
-        System.out.println("**********************Developer:Alireza Abolhasani***************************");
-        System.out.println("*****************************************************************************");
-        System.out.println("*****************************************************************************");
     }
 
 }
