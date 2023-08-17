@@ -4,6 +4,7 @@ import com.mysql.cj.x.protobuf.Mysqlx;
 import com.webkaiser.easyappartment.alert.Status;
 import com.webkaiser.easyappartment.entity.ReservationForm;
 import com.webkaiser.easyappartment.exception.ControllerAdviceHandeller;
+import com.webkaiser.easyappartment.exception.RunTimeReservationError;
 import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.webkaiser.easyappartment.alert.Message.SELECT_SUCCESS;
 import static com.webkaiser.easyappartment.alert.Status.ERROR_IN_ENTRY;
 import static com.webkaiser.easyappartment.alert.Status.MSG_ZERO;
 
@@ -36,22 +38,26 @@ public class ReserveFormInformation {
         return new ResponseEntity<>(tstservices.selectAllReservationForms(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.POST)
     public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail){
-        ReservationForm reservationForm = new ReservationForm();
+        ReservationForm reservationForm;
         HttpHeaders headers = new HttpHeaders();
         HttpStatus httpStatus = null;
-        reservationForm = tstservices.selectAReservationForm(mail);
-        if( ! (reservationForm.getId() == 0)) {
-            httpStatus = HttpStatus.OK;
-             return ResponseEntity.ok()
-                    .header("AAAAAAAAAAAAA", "1111111")
-                    .body(reservationForm);
-        }else{
-            headers.add(ERROR_IN_ENTRY,"121");
-            httpStatus=HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(reservationForm,headers,httpStatus);
+        try {
+            reservationForm = tstservices.selectAReservationForm(mail);
+            if (!(reservationForm.getId() == 0 )) {
+                return ResponseEntity.ok()
+                        .header(SELECT_SUCCESS, "200")
+                        .body(reservationForm);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RunTimeReservationError(HttpStatus.NOT_FOUND,"MSG_ZERO");
         }
+//      return  ResponseEntity(reservationForm,headers,httpStatus);
+        return  ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(reservationForm);
     }
 
     private void httpStatus(int i) {
