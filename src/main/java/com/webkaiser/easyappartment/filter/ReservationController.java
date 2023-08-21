@@ -22,12 +22,12 @@ public class ReservationController implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String remoteAddress= request.getRemoteAddr();
-        if (remoteAddress.equals("127.0.0.1")){
-            destroy();
-        }else{
-            chain.doFilter(request,response);
-        }
+        System.out.println("*******************Filter Info****************");
+        System.out.println(request.getRemoteAddr());
+        System.out.println(request.getAttributeNames());
+        System.out.println(request.getServerPort());
+        chain.doFilter(request,response);
+        System.out.println("*******************Filter Info****************");
     }
 
     @Override

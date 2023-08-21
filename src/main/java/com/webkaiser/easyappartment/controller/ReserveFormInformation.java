@@ -9,11 +9,11 @@ import com.webkaiser.easyappartment.services.TstServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.webkaiser.easyappartment.alert.Message.SELECT_SUCCESS;
@@ -27,10 +27,15 @@ public class ReserveFormInformation {
     private TstServices tstservices;
 
     @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
     private ReserveFormInformation(TstServices tstservices)
     {
         this.tstservices = tstservices;
     }
+
+
 
 //    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value="/getAllReservationForms",method = RequestMethod.GET)
