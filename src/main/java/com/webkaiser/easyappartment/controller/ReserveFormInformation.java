@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.webkaiser.easyappartment.alert.Message.SELECT_SUCCESS;
-import static com.webkaiser.easyappartment.alert.Status.ERROR_IN_ENTRY;
-import static com.webkaiser.easyappartment.alert.Status.MSG_ZERO;
+import static com.webkaiser.easyappartment.alert.Status.*;
 
 @RequestMapping("ReservationForm/")
 @RestController
@@ -35,18 +34,18 @@ public class ReserveFormInformation {
         this.tstservices = tstservices;
     }
 
-
-
-//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+//  @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @RequestMapping(value="/getAllReservationForms",method = RequestMethod.GET)
     public ResponseEntity<List<ReservationForm>> getAllReservationForms ()
     {
         return new ResponseEntity<>(tstservices.selectAllReservationForms(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = DEFAULT_HOST_NAME)
     @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.POST)
-    public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail){
+    public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail,@RequestBody String m){
         ReservationForm reservationForm;
+        String n = m;
         HttpHeaders headers = new HttpHeaders();
         HttpStatus httpStatus = null;
         try {
@@ -101,7 +100,7 @@ public class ReserveFormInformation {
             return ResponseEntity.ok().body(tstservices.updateFormByEmail(reservationForm));
 
     }
-    @ExceptionHandler()
+
     @RequestMapping(value = "/deleteAForm/{Email}",method = RequestMethod.DELETE)
     public ResponseEntity<Integer> deleteAForm(@PathVariable("Email") String email){
         return ResponseEntity.ok().body(tstservices.deleteAForm(email));
