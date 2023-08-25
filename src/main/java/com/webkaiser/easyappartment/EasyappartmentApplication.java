@@ -28,5 +28,4 @@ public class EasyappartmentApplication implements ApplicationRunner {
 			System.out.println("**************Developer:Alireza Abolhasani***********************************");
 			System.out.println("*****************************************************************************");
 	}
-
 }
