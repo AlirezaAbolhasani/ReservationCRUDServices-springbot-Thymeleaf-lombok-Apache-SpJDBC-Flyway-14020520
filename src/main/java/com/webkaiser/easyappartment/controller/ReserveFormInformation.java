@@ -42,11 +42,11 @@ public class ReserveFormInformation {
     }
 
     @CrossOrigin(origins = DEFAULT_HOST_NAME)
-    @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.POST)
-    public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail,@RequestBody String m){
+    @RequestMapping(value = "/selectAReservationForm/{mail}", method = RequestMethod.GET)
+    public ResponseEntity<ReservationForm> selectAReservationForm(@PathVariable("mail") String mail/*,@RequestBody String m*/){
         ReservationForm reservationForm;
-        String n = m;
-        HttpHeaders headers = new HttpHeaders();
+        //String n = m;
+        HttpHeaders headers = null;
         HttpStatus httpStatus = null;
         try {
             reservationForm = tstservices.selectAReservationForm(mail);
