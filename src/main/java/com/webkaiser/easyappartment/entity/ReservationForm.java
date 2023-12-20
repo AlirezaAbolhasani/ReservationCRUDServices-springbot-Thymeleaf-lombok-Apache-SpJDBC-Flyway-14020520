@@ -19,6 +19,24 @@ public class ReservationForm implements Serializable {
     private String zipcode;
     private String email;
 
+    @Override
+    public String toString() {
+        return "ReservationForm{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", family='" + family + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public ReservationForm(byte id, String name, String family, String phoneNumber, String address, String zipcode, String email) {
         this.id = id;
         this.name = name;
@@ -28,4 +46,7 @@ public class ReservationForm implements Serializable {
         this.zipcode = zipcode;
         this.email = email;
     }
+
+
+
 }
