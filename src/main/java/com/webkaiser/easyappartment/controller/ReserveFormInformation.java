@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
 import static com.webkaiser.easyappartment.alert.Message.SELECT_SUCCESS;
 import static com.webkaiser.easyappartment.alert.Status.*;
 
-@RequestMapping("ReservationForm/")
+//@RequestMapping("ReservationForm/")
 @RestController
 public class ReserveFormInformation {
 
@@ -105,5 +107,7 @@ public class ReserveFormInformation {
     public ResponseEntity<Integer> deleteAForm(@PathVariable("Email") String email){
         return ResponseEntity.ok().body(tstservices.deleteAForm(email));
     }
+
+
 
 }

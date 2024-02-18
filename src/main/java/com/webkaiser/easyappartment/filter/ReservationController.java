@@ -22,7 +22,7 @@ public class ReservationController implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("*******************Filter Info****************");
+        System.out.println("*******************Filter Info Is First Filter****************");
         System.out.println(request.getRemoteAddr());
         System.out.println(request.getAttributeNames());
         System.out.println(request.getServerPort());
