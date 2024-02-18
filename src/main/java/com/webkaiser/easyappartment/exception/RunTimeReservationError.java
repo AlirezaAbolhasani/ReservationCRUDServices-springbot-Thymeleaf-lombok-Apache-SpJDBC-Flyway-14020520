@@ -1,6 +1,6 @@
 package com.webkaiser.easyappartment.exception;
 
-import lombok.Data;
+//import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 /**
