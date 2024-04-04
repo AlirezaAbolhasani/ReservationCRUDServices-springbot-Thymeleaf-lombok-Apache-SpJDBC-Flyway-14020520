@@ -2,13 +2,18 @@ package com.webkaiser.easyappartment.entity;
 
 //import lombok.NoArgsConstructor;
 
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.relational.core.mapping.Column;
+
 import java.io.Serializable;
+
+import static sun.security.x509.PolicyInformation.ID;
 
 //@JsonSerialize
 //@Data
 //@NoArgsConstructor
 public class ReservationForm implements Serializable {
-
+    @Id
     private byte id;
     private String name ;
     private String family;
